@@ -1,0 +1,46 @@
+# Python
+backend/venv/
+backend/.venv/
+.venv/
+__pycache__/
+*.py[cod]
+*.pyc
+*.egg-info/
+.eggs/
+dist/
+build/
+.pytest_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+*.log
+
+# Env (secrets – never commit)
+.env
+.env.local
+.env.*.local
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Local / override
+api-test-ui/
+docker-compose.override.yml
+
+# Node
+node_modules/
+frontend/dist/
+*.tsbuildinfo
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.yarn/
+.pnp.*

@@ -1,0 +1,22 @@
+# FastAPI & server
+fastapi>=0.109.0
+uvicorn[standard]>=0.27.0
+
+# Database
+sqlalchemy[asyncio]>=2.0.25
+asyncpg>=0.29.0
+psycopg2-binary>=2.9.9
+alembic>=1.13.0
+
+# Validation & settings
+pydantic>=2.5.0
+pydantic-settings>=2.1.0
+
+# Upstash Redis (workflow cache, REST API – serverless-friendly)
+upstash-redis>=1.0.0
+
+# LLM (Gemini for step execution)
+google-generativeai>=0.8.0
+
+# Utilities
+python-multipart>=0.0.6
