@@ -1,3 +1,4 @@
+"""Run workflow and list run history. POST .../run validates the graph then executes steps with Gemini."""
 from uuid import UUID
 
 from fastapi import APIRouter, Depends, HTTPException

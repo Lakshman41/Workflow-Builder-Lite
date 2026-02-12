@@ -24,6 +24,8 @@ class Settings(BaseSettings):
 
     # App
     api_prefix: str = "/api"
+    # When set (e.g. in Docker), serve frontend static files and SPA fallback from this directory
+    static_dir: str = ""
 
     class Config:
         env_file = (str(_PROJECT_ROOT / ".env"), ".env", "../.env")

@@ -4,6 +4,32 @@ A visual, no-code automation builder for text processing workflows. Create multi
 
 ---
 
+## Submission summary
+
+**How to run (one command):**
+```bash
+cp .env.example .env   # then edit .env with DATABASE_URL and GEMINI_API_KEY
+docker compose up --build
+```
+Open **http://localhost:8080**. See [Quick Start](#-quick-start) and [Detailed Setup](#-detailed-setup) for full steps.
+
+**What is done:**
+- Create workflows with 2–4+ steps (e.g. clean text, summarize, extract key points, tag category)
+- Run workflow on input text and see output of each step
+- Run history (last 5 runs per workflow + global run history page)
+- Simple home page with clear steps; Status page (backend, database, LLM, Redis health)
+- Basic handling for empty/wrong input (validation, toasts, error messages)
+- No API keys in code; settings via `.env` and [.env.example](.env.example)
+
+**What is not done:**
+- User accounts / auth (browser-ID only)
+- Document upload or file-based steps
+- Scheduled or triggered runs
+
+**Submission files:** [AI_NOTES.md](AI_NOTES.md) (AI use and LLM choice), [ABOUTME.md](ABOUTME.md) (name and resume), [PROMPTS_USED.md](PROMPTS_USED.md) (prompts used). Do not commit `.env`; use [.env.example](.env.example) as template.
+
+---
+
 ## 🎯 What is this?
 
 **Workflow Builder Lite** lets you chain text transformations into automated pipelines:
@@ -160,7 +186,7 @@ cp .env.example .env
 | Variable | Description | Example |
 |----------|-------------|---------|
 | `DATABASE_URL` | PostgreSQL connection string (use `postgresql+asyncpg://` for async driver) | `postgresql+asyncpg://user:pass@localhost:5432/workflows` |
-| `GEMINI_API_KEY` | Google Gemini API key for step execution | `AIzaSyD...` |
+| `GEMINI_API_KEY` | Google Gemini API key for step execution | _(from Google AI Studio)_ |
 
 **Optional Variables:**
 
@@ -803,7 +829,7 @@ DATABASE_URL=postgresql+asyncpg://user:pass@host:5432/workflows?sslmode=require
 DATABASE_SSL_NO_VERIFY=false
 
 # LLM (required)
-GEMINI_API_KEY=AIzaSyD...
+GEMINI_API_KEY=<your-key-from-google-ai-studio>
 GEMINI_MODEL=gemini-2.5-flash
 
 # Redis (optional but recommended)
@@ -813,6 +839,36 @@ UPSTASH_REDIS_REST_TOKEN=...
 # API (usually default)
 API_PREFIX=api
 ```
+
+---
+
+## 🚀 Deployment
+
+### Docker (single image: backend + frontend)
+
+From the project root:
+
+```bash
+docker compose up --build
+```
+
+App: **http://localhost:8080**. The image runs migrations on startup and serves the API and the React SPA. Use a `.env` file or set `DATABASE_URL` and `GEMINI_API_KEY` (see [docker-compose.yml](docker-compose.yml)).
+
+To build the image only:
+
+```bash
+docker build -t workflow-builder-lite .
+```
+
+### Google Cloud Platform (GCP)
+
+Deploy to **Cloud Run** with **Cloud SQL (PostgreSQL)**. No Kubernetes required.
+
+1. **Build and push** the same Docker image to Artifact Registry.
+2. **Create a Cloud SQL** PostgreSQL instance and database.
+3. **Deploy to Cloud Run** with the image, Cloud SQL connection, and env/Secret Manager for `DATABASE_URL`, `GEMINI_API_KEY`, and optional Upstash Redis.
+
+Full steps, IAM, and commands: **[docs/DEPLOY-GCP.md](docs/DEPLOY-GCP.md)**.
 
 ---
 
@@ -873,7 +929,7 @@ echo $GEMINI_API_KEY
 # Generate new key if needed
 
 # Test directly:
-python backend/scripts/test_gemini.py
+python backend/scripts/test_llm.py
 ```
 
 #### 4. Frontend can't reach backend

@@ -1,0 +1,36 @@
+# Local run with Docker (backend + frontend static, Postgres)
+# From project root: docker compose up --build
+# App: http://localhost:8080
+
+services:
+  app:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      DATABASE_URL: postgresql+asyncpg://postgres:postgres@db:5432/workflows
+      PORT: "8080"
+      STATIC_DIR: /app/static
+      # Optional: set in .env or here
+      # GEMINI_API_KEY: ...
+      # UPSTASH_REDIS_REST_URL: ...
+      # UPSTASH_REDIS_REST_TOKEN: ...
+    env_file:
+      - .env
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: workflows
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5

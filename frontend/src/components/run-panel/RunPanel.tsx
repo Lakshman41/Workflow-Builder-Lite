@@ -24,7 +24,10 @@ export function RunPanel({ workflowId, workflow }: RunPanelProps) {
     : {};
 
   async function handleRun() {
-    if (!inputText.trim()) return;
+    if (!inputText.trim()) {
+      toast.error("Enter some text to run the workflow.");
+      return;
+    }
     setRunError(null);
     setLastRun(null);
 

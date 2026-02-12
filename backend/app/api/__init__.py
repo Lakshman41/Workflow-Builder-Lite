@@ -1,3 +1,4 @@
+"""API routes under /api: workflows (CRUD, steps, edges, validate), runs (create, list, get), health."""
 from fastapi import APIRouter
 
 from app.api.routes import health, runs, workflows

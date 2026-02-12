@@ -1,3 +1,7 @@
+/**
+ * Workflow editor: canvas (ReactFlow), step/edge CRUD, save, validate, run panel.
+ * Loads workflow from API, syncs to nodes/edges. Connections are one-in one-out per step (linear chain).
+ */
 import { useCallback, useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import {
@@ -30,6 +34,7 @@ import type { Workflow } from "@/types/workflow";
 
 const nodeTypes = { stepNode: StepNode };
 
+/** Map API workflow (steps + edges) to ReactFlow nodes and edges. */
 function workflowToFlow(
   workflow: Workflow,
   onEdit: (stepId: string) => void,

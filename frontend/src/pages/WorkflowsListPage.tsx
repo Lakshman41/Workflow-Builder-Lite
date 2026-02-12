@@ -97,6 +97,17 @@ export function WorkflowsListPage() {
         </button>
       </div>
 
+      <div className="mb-6 rounded-lg border border-zinc-800 bg-zinc-900/30 px-4 py-3 text-sm text-zinc-400">
+        <p className="font-medium text-zinc-300">How to get started</p>
+        <ol className="mt-2 list-inside list-decimal space-y-1">
+          <li>Create a workflow (button above).</li>
+          <li>Add steps (e.g. Clean text, Summarize, Extract key points) and set one as START and one as END.</li>
+          <li>Connect steps by dragging from one node to the next, then Save.</li>
+          <li>Paste input text in the Run panel and click Run to see each step’s output.</li>
+          <li>View <Link to="/runs" className="text-sky-400 hover:underline">Run History</Link> and <Link to="/status" className="text-sky-400 hover:underline">Status</Link> (backend, database, LLM health).</li>
+        </ol>
+      </div>
+
       {workflows.length === 0 ? (
         <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-8 text-center text-zinc-400">
           <p>No workflows yet.</p>

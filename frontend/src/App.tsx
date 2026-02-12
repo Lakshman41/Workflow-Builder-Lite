@@ -7,6 +7,7 @@ import { RunHistoryPage } from "@/pages/RunHistoryPage";
 import { StatusPage } from "@/pages/StatusPage";
 import "@/index.css";
 
+/** Routes: / = workflows list, /workflow/:id = editor, /runs = history, /status = health. */
 export default function App() {
   return (
     <BrowserRouter>
